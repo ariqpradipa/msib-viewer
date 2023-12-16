@@ -8,7 +8,8 @@
             <h3 class="font-black text-only-white md:text-sm text-lg underline">{{ name }}</h3>
             <p class="md:text-xs text-only-white text-sm">{{ activity_name }}</p>
             <p class="md:text-[10px] text-only-white text-xs">{{ mitra_name }} | {{ location }}</p>
-            <p class="md:text-[10px] text-only-gray text-xs">{{ credits_count }} sks | 4 bulan</p>
+            <p class="md:text-[10px] text-only-gray text-xs">{{ credits_count }} sks | {{ getTotalMonths(start_duration,
+                end_duration) }} bulan</p>
             <p class="md:text-xs font-bold text-only-blue text-xs">{{ certified ? "certified" : null }}</p>
             <div class="flex justify-end items-end">
                 <div class="bg-only-purple p-1 px-2 rounded-full">
@@ -31,6 +32,24 @@ export default {
         certified: Boolean,
         logo: String,
         mitra_name: String,
+        start_duration: String,
+        end_duration: String,
+    },
+    methods: {
+        getTotalMonths(startDateStr?: string, endDateStr?: string): number {
+
+            if (!startDateStr || !endDateStr) return 0;
+
+            const startDate = new Date(startDateStr);
+            const endDate = new Date(endDateStr);
+
+            let months = (endDate.getFullYear() - startDate.getFullYear()) * 12;
+            months -= startDate.getMonth();
+            months += endDate.getMonth();
+
+            return months <= 0 ? 0 : months;
+
+        }
     }
 }
 </script>

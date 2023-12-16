@@ -5,7 +5,8 @@
                 <ActivityCard v-for="(activity, index) in activities" :key="index" :name="activity.name"
                     :activity_name="activity.activity_name" :total="activity.total" :credits_count="activity.credits_count"
                     :location="activity.location" :certified="activity.certified" :logo="activity.logo"
-                    :mitra_name="activity.mitra_name" />
+                    :mitra_name="activity.mitra_name" :start_duration="activity.start_duration"
+                    :end_duration="activity.end_duration" />
             </div>
         </div>
     </div>
@@ -30,6 +31,8 @@ export default {
                 certified: boolean;
                 logo: string;
                 mitra_name: string;
+                start_duration: string;
+                end_duration: string;
             }[],
             offset: 0, // Keep track of your current offset
             limit: 20, // Set your limit per fetch
@@ -51,6 +54,8 @@ export default {
                             certified: activity.certified,
                             logo: activity.logo === "" ? 'https://kampusmerdeka.kemdikbud.go.id/static/media/logo-placeholder.b736d945.webp' : activity.logo,
                             mitra_name: activity.mitra_name,
+                            start_duration: activity.start_duration,
+                            end_duration: activity.end_duration,
                         }
                     })];
                     this.offset += this.limit; // Update the offset
