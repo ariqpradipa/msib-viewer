@@ -9,13 +9,17 @@
             <p class="md:text-xs text-only-white text-sm">{{ activity_name }}</p>
             <p class="md:text-[10px] text-only-white text-xs">{{ mitra_name }} | {{ location }}</p>
             <p class="md:text-[10px] text-only-gray text-xs">{{ credits_count }} sks | 4 bulan</p>
-            <p class="md:text-xs text-only-gray text-xs">certified</p>
+            <p class="md:text-xs font-bold text-only-blue text-xs">{{ certified ? "certified" : null }}</p>
+            <div class="flex justify-end items-end">
+                <div class="bg-only-purple p-1 px-2 rounded-full">
+                    <p class="md:text-sm font-bold text-only-white text-xs">{{ total }}</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-
 export default {
     name: 'ActivityCard',
     props: {
