@@ -1,7 +1,7 @@
 <template>
     <div class="bg-only-black min-h-screen">
         <div class="pt-5">
-            <div class="grid grid-cols-3 gap-5" ref="scrollComponent">
+            <div class="flex flex-col justify-center items-center md:grid md:grid-cols-3 gap-5" ref="scrollComponent">
                 <ActivityCard v-for="(activity, index) in activities" :key="index" :name="activity.name"
                     :activity_name="activity.activity_name" :total="activity.total" :credits_count="activity.credits_count"
                     :location="activity.location" :certified="activity.certified" :logo="activity.logo"
