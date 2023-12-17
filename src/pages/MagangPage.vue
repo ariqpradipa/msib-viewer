@@ -1,6 +1,32 @@
 <template>
-    <div class="bg-only-black min-h-screen">
+    <div class="bg-only-black min-h-screen font-poppins">
         <div class="pt-5">
+            <form class="p-5 w-full flex flex-row space-x-8" @submit.prevent="fetchFilteredActivities">
+                <div class="flex flex-wrap -mx-3 mb-6 md:max-w-4xl">
+                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <input
+                            class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
+                            id="posisi-filter" type="text" placeholder="Semua Posisi" v-model="posisi">
+                    </div>
+                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <input
+                            class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
+                            id="lokasi-filter" type="text" placeholder="Semua Lokasi" v-model="lokasi">
+                    </div>
+                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <input
+                            class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
+                            id="mitra-filter" type="text" placeholder="Semua Perusahaan" v-model="mitra">
+                    </div>
+                </div>
+                <div>
+                    <button
+                        class="flex-shrink-0 font-poppins border-transparent border-4 bg-only-purple text-only-white font-bold hover:bg-only-dark-gray text-lg py-1 px-8 rounded"
+                        type="submit">
+                        Cari
+                    </button>
+                </div>
+            </form>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-5 m-5 md:m-0" ref="scrollComponent">
                 <ActivityCard v-for="(activity, index) in activities" :key="index" :name="activity.name"
                     :activity_name="activity.activity_name" :total="activity.total" :credits_count="activity.credits_count"
@@ -36,12 +62,15 @@ export default {
             }[],
             offset: 0, // Keep track of your current offset
             limit: 20, // Set your limit per fetch
+            posisi: "",
+            lokasi: "",
+            mitra: "",
             isLoading: false, // To prevent multiple simultaneous requests
         }
     },
     methods: {
         fetchActivities() {
-            fetch(`https://api.kampusmerdeka.kemdikbud.go.id/magang/browse/position?offset=${this.offset}&limit=${this.limit}&location_key=&mitra_key=&keyword=&sector_id=&sort_by=published_time&order=desc`)
+            fetch(`https://api.kampusmerdeka.kemdikbud.go.id/magang/browse/position?offset=${this.offset}&limit=${this.limit}&location_key=${this.lokasi}&mitra_key=${this.mitra}&keyword=${this.posisi}&sector_id=&sort_by=published_time&order=desc`)
                 .then(response => response.json())
                 .then(data => {
                     this.activities = [...this.activities, ...data.data.map((activity: any) => {
@@ -74,6 +103,11 @@ export default {
             } finally {
                 this.isLoading = false;
             }
+        },
+        fetchFilteredActivities() {
+            this.activities = [];
+            this.offset = 0;
+            this.fetchActivities();
         },
         handleScroll() {
             let scrollTotal = document.documentElement.scrollTop + window.innerHeight;

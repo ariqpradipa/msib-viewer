@@ -4,8 +4,8 @@
         <div class="w-full md:w-1/3 bg-only-white rounded-md grid place-items-center">
             <img :src=logo alt="mitra logo" class="rounded-xl" />
         </div>
-        <div class="w-full md:w-2/3 bg-only-dark-gray flex flex-col gap-1 p-3">
-            <h3 class="font-black text-only-white md:text-sm text-sm underline">{{ name }}</h3>
+        <div class="w-full md:w-2/3 bg-only-dark-gray flex flex-col gap-1 p-3 justify-between">
+            <h3 class="font-bold text-only-white md:text-sm text-sm underline">{{ name }}</h3>
             <p class="md:text-xs text-only-white text-xs">{{ activity_name }}</p>
             <p class="md:text-[10px] text-only-white text-[10px]">{{ mitra_name }} | {{ location }}</p>
             <p class="md:text-[10px] text-only-gray text-[10px]">{{ credits_count }} sks | {{ getTotalMonths(start_duration,
