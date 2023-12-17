@@ -1,33 +1,37 @@
 <template>
-    <div class="bg-only-black min-h-screen font-poppins">
-        <div class="pt-5">
-            <form class="p-5 w-full flex flex-row space-x-8" @submit.prevent="fetchFilteredActivities">
-                <div class="flex flex-wrap -mx-3 mb-6 md:max-w-4xl">
-                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                        <input
-                            class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
-                            id="posisi-filter" type="text" placeholder="Semua Posisi" v-model="posisi">
-                    </div>
-                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                        <input
-                            class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
-                            id="lokasi-filter" type="text" placeholder="Semua Lokasi" v-model="lokasi">
-                    </div>
-                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                        <input
-                            class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
-                            id="mitra-filter" type="text" placeholder="Semua Perusahaan" v-model="mitra">
-                    </div>
+    <div class="bg-only-black min-h-screen font-poppins pt-5">
+        <div class="flex justify-center p-5">
+            <p class="text-only-white font-bold text-xl md:text-4xl">MSIB Viewer | Magang</p>
+        </div>
+        <form class="w-full flex flex-row justify-center space-x-8 p-2 md:p-0" @submit.prevent="fetchFilteredActivities">
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <input
+                        class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
+                        id="posisi-filter" type="text" placeholder="Semua Posisi" v-model="posisi">
                 </div>
-                <div>
-                    <button
-                        class="flex-shrink-0 font-poppins border-transparent border-4 bg-only-purple text-only-white font-bold hover:bg-only-dark-gray text-lg py-1 px-8 rounded"
-                        type="submit">
-                        Cari
-                    </button>
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <input
+                        class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
+                        id="lokasi-filter" type="text" placeholder="Semua Lokasi" v-model="lokasi">
                 </div>
-            </form>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-5 m-5 md:m-0" ref="scrollComponent">
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <input
+                        class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
+                        id="mitra-filter" type="text" placeholder="Semua Perusahaan" v-model="mitra">
+                </div>
+            </div>
+            <div>
+                <button
+                    class="flex-shrink-0 font-poppins border-transparent border-4 bg-only-purple text-only-white font-bold hover:bg-only-dark-gray text-lg py-1 px-8 rounded"
+                    type="submit">
+                    Cari
+                </button>
+            </div>
+        </form>
+
+        <div class="flex justify-center w-full">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-5 m-2 md:m-0">
                 <ActivityCard v-for="(activity, index) in activities" :key="index" :name="activity.name"
                     :activity_name="activity.activity_name" :total="activity.total" :credits_count="activity.credits_count"
                     :location="activity.location" :certified="activity.certified" :logo="activity.logo"
