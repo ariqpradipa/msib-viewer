@@ -13,7 +13,7 @@
             <p class="md:text-xs font-bold text-only-blue text-xs">{{ certified ? "certified" : null }}</p>
             <div class="flex justify-end items-end">
                 <div class="bg-only-purple p-1 px-2 rounded-full">
-                    <p class="md:text-sm font-bold text-only-white text-xs">{{ total }}</p>
+                    <p class="md:text-sm font-bold text-only-white text-xs">Quota: {{ total }}</p>
                 </div>
             </div>
         </div>
