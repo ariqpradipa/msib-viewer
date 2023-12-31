@@ -3,30 +3,62 @@
         <div class="flex justify-center p-5">
             <p class="text-only-white font-bold text-xl md:text-4xl">MSIB Viewer | Magang</p>
         </div>
-        <form class="w-full flex flex-row justify-center space-x-8 p-2 md:p-0" @submit.prevent="fetchFilteredActivities">
-            <div class="flex flex-wrap -mx-3 mb-6">
-                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                    <input
-                        class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
-                        id="posisi-filter" type="text" placeholder="Semua Posisi" v-model="posisi">
+        <form class="flex flex-col justify-center items-center mb-6" @submit.prevent="fetchFilteredActivities">
+            <div class="grid gap-x-8 md:w-1/2">
+                <div class="flex flex-row gap-8">
+                    <div class="flex flex-wrap -mx-3">
+                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <input
+                                class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
+                                id="posisi-filter" type="text" placeholder="Semua Posisi" v-model="posisi">
+                        </div>
+                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <input
+                                class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
+                                id="lokasi-filter" type="text" placeholder="Semua Lokasi" v-model="lokasi">
+                        </div>
+                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <input
+                                class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
+                                id="mitra-filter" type="text" placeholder="Semua Perusahaan" v-model="mitra">
+                        </div>
+
+                    </div>
+                    <div>
+                        <button
+                            class="flex-shrink-0 font-poppins border-transparent border-4 bg-only-purple text-only-white font-bold hover:bg-only-dark-gray text-lg py-1 px-8 rounded"
+                            type="submit">
+                            Cari
+                        </button>
+                    </div>
                 </div>
-                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                    <input
-                        class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
-                        id="lokasi-filter" type="text" placeholder="Semua Lokasi" v-model="lokasi">
+
+                <div class="flex items-center gap-8">
+                    <p class="text-only-white font-bold">Tipe Lowongan: </p>
+                    <div class="grid grid-cols-3 gap-8 text-center w-9/12">
+                        <label>
+                            <input type="radio" value="semua" class="peer hidden" name="opportunity_type" checked>
+                            <div
+                                class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
+                                <p class="text-only-white text-center">Semua</p>
+                            </div>
+                        </label>
+                        <label>
+                            <input type="radio" value="semua" class="peer hidden" name="opportunity_type">
+                            <div
+                                class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
+                                <p class="text-only-white text-center">MSIB</p>
+                            </div>
+                        </label>
+                        <label>
+                            <input type="radio" value="semua" class="peer hidden" name="opportunity_type">
+                            <div
+                                class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
+                                <p class="text-only-white text-center">Mandiri</p>
+                            </div>
+                        </label>
+                    </div>
                 </div>
-                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                    <input
-                        class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
-                        id="mitra-filter" type="text" placeholder="Semua Perusahaan" v-model="mitra">
-                </div>
-            </div>
-            <div>
-                <button
-                    class="flex-shrink-0 font-poppins border-transparent border-4 bg-only-purple text-only-white font-bold hover:bg-only-dark-gray text-lg py-1 px-8 rounded"
-                    type="submit">
-                    Cari
-                </button>
             </div>
         </form>
 
