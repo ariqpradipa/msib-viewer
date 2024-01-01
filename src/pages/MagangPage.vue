@@ -2,7 +2,7 @@
     <div class="bg-only-black min-h-screen font-poppins pt-5">
         <div class="flex justify-center items-center p-5 gap-2 md:gap-6">
             <img src="/msib-viewer.webp" class="w-10 md:w-16" />
-            <p class="text-only-white font-bold text-xl md:text-4xl">MSIB Viewer | Magang</p>
+            <h1 class="text-only-white font-bold text-xl md:text-4xl">MSIB Viewer | Magang</h1>
         </div>
         <form class="flex flex-col justify-center items-center mb-6 mx-5 md:mx-0" @submit.prevent="fetchFilteredActivities">
             <div class="grid gap-x-8 md:w-1/2">
