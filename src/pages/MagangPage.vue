@@ -3,7 +3,7 @@
         <div class="flex justify-center p-5">
             <p class="text-only-white font-bold text-xl md:text-4xl">MSIB Viewer | Magang</p>
         </div>
-        <form class="flex flex-col justify-center items-center mb-6" @submit.prevent="fetchFilteredActivities">
+        <form class="flex flex-col justify-center items-center mb-6 mx-5 md:mx-0" @submit.prevent="fetchFilteredActivities">
             <div class="grid gap-x-8 md:w-1/2">
                 <div class="flex flex-row gap-8">
                     <div class="flex flex-wrap -mx-3">
@@ -33,9 +33,9 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-8 my-2">
+                <div class="flex flex-col md:flex-row md:items-center gap-x-8 gap-y-2 my-2">
                     <p class="text-only-white font-bold">Tipe Lowongan: </p>
-                    <div class="grid grid-cols-3 gap-8 text-center w-9/12">
+                    <div class="grid grid-cols-3 gap-8 text-center w-full md:w-9/12">
                         <label>
                             <input type="radio" value="" class="peer hidden" name="opportunity_type" checked
                                 v-model="opportunity_type">
