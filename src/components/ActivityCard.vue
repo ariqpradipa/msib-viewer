@@ -1,6 +1,6 @@
 <template>
     <div
-        class="font-poppins relative flex flex-col md:flex-row md:space-x-2 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-[29rem] bg-only-dark-gray">
+        class="animate__animated animate__fadeIn animate__slow transition-transform duration-300 hover:scale-105 font-poppins relative flex flex-col md:flex-row md:space-x-2 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-[29rem] bg-only-dark-gray">
         <div class="w-full h-full md:w-1/3 bg-only-white rounded-md grid place-items-center p-2">
             <img :src=logo alt="mitra logo" class="rounded-xl" />
         </div>

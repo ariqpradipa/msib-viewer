@@ -1,24 +1,26 @@
 <template>
     <div class="bg-only-black min-h-screen font-poppins pt-5">
-        <div class="flex justify-center items-center p-5 gap-2 md:gap-6">
-            <img src="/msib-viewer.webp" class="w-10 md:w-16" />
-            <h1 class="text-only-white font-bold text-xl md:text-4xl">MSIB Viewer | Magang</h1>
+        <div class="animate__delay-1s flex justify-center items-center p-5 gap-2 md:gap-6">
+            <img src="/msib-viewer.webp" class="animate__animated animate__fadeInLeftBig animate__slow w-10 md:w-16" />
+            <h1 class="animate__animated animate__fadeIn animate__slow text-only-white font-bold text-xl md:text-4xl">
+                MSIB Viewer | Magang
+            </h1>
         </div>
         <form class="flex flex-col justify-center items-center mb-6 mx-5 md:mx-0" @submit.prevent="fetchFilteredActivities">
             <div class="grid gap-x-8 md:w-1/2">
                 <div class="flex flex-row gap-8">
                     <div class="flex flex-wrap -mx-3">
-                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <div class="animate__animated animate__fadeInLeft w-full md:w-1/3 px-3 mb-6 md:mb-0">
                             <input
                                 class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
                                 id="posisi-filter" type="text" placeholder="Semua Posisi" v-model="posisi">
                         </div>
-                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <div class="animate__animated animate__fadeInLeft w-full md:w-1/3 px-3 mb-6 md:mb-0">
                             <input
                                 class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
                                 id="lokasi-filter" type="text" placeholder="Semua Lokasi" v-model="lokasi">
                         </div>
-                        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <div class="animate__animated animate__fadeInLeft w-full md:w-1/3 px-3 mb-6 md:mb-0">
                             <input
                                 class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
                                 id="mitra-filter" type="text" placeholder="Semua Perusahaan" v-model="mitra">
@@ -27,14 +29,15 @@
                     </div>
                     <div>
                         <button
-                            class="flex-shrink-0 font-poppins border-transparent border-4 bg-only-purple text-only-white font-bold hover:bg-only-dark-gray text-lg py-1 px-8 rounded"
+                            class="animate__animated animate__fadeInRight animate__slow flex-shrink-0 font-poppins border-transparent border-4 bg-only-purple text-only-white font-bold hover:bg-only-dark-gray text-lg py-1 px-8 rounded"
                             type="submit">
                             Cari
                         </button>
                     </div>
                 </div>
 
-                <div class="flex flex-col md:flex-row md:items-center gap-x-8 gap-y-2 my-2">
+                <div
+                    class="animate__animated animate__fadeInUp animate__delay-1s flex flex-col md:flex-row md:items-center gap-x-8 gap-y-2 my-2">
                     <p class="text-only-white font-bold">Tipe Lowongan: </p>
                     <div class="grid grid-cols-3 gap-8 text-center w-full md:w-9/12">
                         <label>
@@ -65,7 +68,6 @@
                 </div>
             </div>
         </form>
-
         <div class="flex justify-center w-full">
             <div class="grid grid-cols-2 md:grid-cols-3 gap-5 m-2 md:m-0">
                 <ActivityCard v-for="(activity, index) in activities" :key="index" :name="activity.name"

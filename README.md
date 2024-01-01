@@ -1,6 +1,5 @@
 # msib-viewer
-
-MSIB Viewer is a web application built with Vue and TypeScript. It's designed to view available programs for Kampus Merdeka.
+MSIB Viewer adalah aplikasi berbasis web yang dibangun dengan Vue. Aplikasi ini dirancang untuk melihat program-program magang maupun studi independen dengan detail yang tersedia di Kampus Merdeka. Ini adalah tampilan alternatif dari web resmi kampus merdeka.
 
 | :exclamation:  The app might break if the api changes  |
 |--------------------------------------------------------|
