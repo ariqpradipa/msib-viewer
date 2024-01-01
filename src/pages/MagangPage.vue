@@ -33,25 +33,25 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-8">
+                <div class="flex items-center gap-8 my-2">
                     <p class="text-only-white font-bold">Tipe Lowongan: </p>
                     <div class="grid grid-cols-3 gap-8 text-center w-9/12">
                         <label>
-                            <input type="radio" value="semua" class="peer hidden" name="opportunity_type" checked>
+                            <input type="radio" value="" class="peer hidden" name="opportunity_type" checked v-model="opportunity_type">
                             <div
                                 class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
                                 <p class="text-only-white text-center">Semua</p>
                             </div>
                         </label>
                         <label>
-                            <input type="radio" value="semua" class="peer hidden" name="opportunity_type">
+                            <input type="radio" value="MSIB" class="peer hidden" name="opportunity_type" v-model="opportunity_type">
                             <div
                                 class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
                                 <p class="text-only-white text-center">MSIB</p>
                             </div>
                         </label>
                         <label>
-                            <input type="radio" value="semua" class="peer hidden" name="opportunity_type">
+                            <input type="radio" value="MANDIRI" class="peer hidden" name="opportunity_type" v-model="opportunity_type">
                             <div
                                 class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
                                 <p class="text-only-white text-center">Mandiri</p>
@@ -76,7 +76,6 @@
 
 <script lang="ts">
 import ActivityCard from '@/components/ActivityCard.vue'
-
 export default {
     name: 'MagangPage',
     components: {
@@ -101,12 +100,13 @@ export default {
             posisi: "",
             lokasi: "",
             mitra: "",
+            opportunity_type: "",
             isLoading: false, // To prevent multiple simultaneous requests
         }
     },
     methods: {
         fetchActivities() {
-            fetch(`https://api.kampusmerdeka.kemdikbud.go.id/magang/browse/position?offset=${this.offset}&limit=${this.limit}&location_key=${this.lokasi}&mitra_key=${this.mitra}&keyword=${this.posisi}&sector_id=&sort_by=published_time&order=desc`)
+            fetch(`${import.meta.env.VITE_APP_OPPORTUNITY_URL}opportunity_type=${this.opportunity_type}&keyword=${this.posisi}&location_key=${this.lokasi}&activity_type=&mitra_key=${this.mitra}&offset=${this.offset}&limit=${this.limit}`)
                 .then(response => response.json())
                 .then(data => {
                     this.activities = [...this.activities, ...data.data.map((activity: any) => {
@@ -117,7 +117,7 @@ export default {
                             credits_count: activity.credits_count,
                             location: activity.location,
                             certified: activity.certified,
-                            logo: activity.logo === "" ? 'https://kampusmerdeka.kemdikbud.go.id/static/media/logo-placeholder.b736d945.webp' : activity.logo,
+                            logo: activity.logo === "" ? `${import.meta.env.VITE_APP_IMAGE_PLACEHOLDER}` : activity.logo,
                             mitra_name: activity.mitra_name,
                             start_duration: activity.start_duration,
                             end_duration: activity.end_duration,
