@@ -1,6 +1,10 @@
 # msib-viewer
 
-This template should help get you started developing with Vue 3 in Vite.
+MSIB Viewer is a web application built with Vue and TypeScript. It's designed to view available programs for Kampus Merdeka.
+
+| :exclamation:  The app might break if the api changes  |
+|--------------------------------------------------------|
+
 
 ## Recommended IDE Setup
 
@@ -24,23 +28,11 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ## Project Setup
 
 ```sh
-npm install
+pnpm install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+pnpm run dev
 ```
