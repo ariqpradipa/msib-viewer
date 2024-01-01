@@ -37,21 +37,24 @@
                     <p class="text-only-white font-bold">Tipe Lowongan: </p>
                     <div class="grid grid-cols-3 gap-8 text-center w-9/12">
                         <label>
-                            <input type="radio" value="" class="peer hidden" name="opportunity_type" checked v-model="opportunity_type">
+                            <input type="radio" value="" class="peer hidden" name="opportunity_type" checked
+                                v-model="opportunity_type">
                             <div
                                 class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
                                 <p class="text-only-white text-center">Semua</p>
                             </div>
                         </label>
                         <label>
-                            <input type="radio" value="MSIB" class="peer hidden" name="opportunity_type" v-model="opportunity_type">
+                            <input type="radio" value="MSIB" class="peer hidden" name="opportunity_type"
+                                v-model="opportunity_type">
                             <div
                                 class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
                                 <p class="text-only-white text-center">MSIB</p>
                             </div>
                         </label>
                         <label>
-                            <input type="radio" value="MANDIRI" class="peer hidden" name="opportunity_type" v-model="opportunity_type">
+                            <input type="radio" value="MANDIRI" class="peer hidden" name="opportunity_type"
+                                v-model="opportunity_type">
                             <div
                                 class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
                                 <p class="text-only-white text-center">Mandiri</p>
@@ -65,10 +68,12 @@
         <div class="flex justify-center w-full">
             <div class="grid grid-cols-2 md:grid-cols-3 gap-5 m-2 md:m-0">
                 <ActivityCard v-for="(activity, index) in activities" :key="index" :name="activity.name"
-                    :activity_name="activity.activity_name" :total="activity.total" :credits_count="activity.credits_count"
-                    :location="activity.location" :certified="activity.certified" :logo="activity.logo"
-                    :mitra_name="activity.mitra_name" :start_duration="activity.start_duration"
-                    :end_duration="activity.end_duration" />
+                    :activity_type="activity.activity_type" :location="activity.location"
+                    :months_duration="activity.months_duration" :credits_count="activity.credits_count"
+                    :mitra_name="activity.mitra_name" :mitra_brand_name="activity.mitra_brand_name" :logo="activity.logo"
+                    :participants_count="activity.participants_count" :certified="activity.certified"
+                    :start_duration="activity.start_duration" :end_duration="activity.end_duration"
+                    :opportunity_type="activity.opportunity_type" />
             </div>
         </div>
     </div>
@@ -84,16 +89,19 @@ export default {
     data() {
         return {
             activities: [] as {
-                name: string;
-                activity_name: string;
-                total: number;
-                credits_count: number;
-                location: string;
-                certified: boolean;
-                logo: string;
-                mitra_name: string;
-                start_duration: string;
-                end_duration: string;
+                opportunity_type: string,
+                name: string,
+                activity_type: string,
+                location: string,
+                months_duration: number,
+                credits_count: number,
+                mitra_name: string,
+                mitra_brand_name: string,
+                logo: string,
+                participants_count: number,
+                certified: boolean,
+                start_duration: string,
+                end_duration: string,
             }[],
             offset: 0, // Keep track of your current offset
             limit: 20, // Set your limit per fetch
@@ -111,14 +119,17 @@ export default {
                 .then(data => {
                     this.activities = [...this.activities, ...data.data.map((activity: any) => {
                         return {
+                            opportunity_type: activity.opportunity_type,
                             name: activity.name,
-                            activity_name: activity.activity_name,
-                            total: activity.total,
-                            credits_count: activity.credits_count,
+                            activity_type: activity.activity_type,
                             location: activity.location,
-                            certified: activity.certified,
-                            logo: activity.logo === "" ? `${import.meta.env.VITE_APP_IMAGE_PLACEHOLDER}` : activity.logo,
+                            months_duration: activity.months_duration,
+                            credits_count: activity.credits_count,
                             mitra_name: activity.mitra_name,
+                            mitra_brand_name: activity.mitra_brand_name,
+                            logo: activity.logo === "" ? `${import.meta.env.VITE_APP_IMAGE_PLACEHOLDER}` : activity.logo,
+                            participants_count: activity.participants_count,
+                            certified: activity.certified,
                             start_duration: activity.start_duration,
                             end_duration: activity.end_duration,
                         }

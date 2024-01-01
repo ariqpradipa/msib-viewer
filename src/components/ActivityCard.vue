@@ -6,14 +6,14 @@
         </div>
         <div class="w-full md:w-2/3 bg-only-dark-gray flex flex-col gap-1 p-3 justify-between">
             <h3 class="font-bold text-only-white md:text-sm text-sm underline">{{ name }}</h3>
-            <p class="md:text-xs text-only-white text-xs">{{ activity_name }}</p>
-            <p class="md:text-[10px] text-only-white text-[10px]">{{ mitra_name }} | {{ location }}</p>
-            <p class="md:text-[10px] text-only-gray text-[10px]">{{ credits_count }} sks | {{ getTotalMonths(start_duration,
-                end_duration) }} bulan</p>
+            <p class="md:text-xs text-only-white text-xs">{{ mitra_name }}</p>
+            <p class="md:text-xs text-only-white text-[10px]">{{ location }} | {{ activity_type }}</p>
+            <p class="md:text-xs text-only-gray text-[10px]">{{ credits_count }} sks | {{ months_duration }} bulan</p>
+            <p class="md:text-xs text-only-gray text-[10px]">Peserta: {{ participants_count }}</p>
             <p class="md:text-xs font-bold text-only-blue text-xs">{{ certified ? "certified" : null }}</p>
             <div class="flex justify-end items-end">
                 <div class="bg-only-purple p-1 px-2 rounded-full">
-                    <p class="md:text-sm font-bold text-only-white text-xs">Quota: {{ total }}</p>
+                    <p class="md:text-sm font-bold text-only-white text-xs">{{ opportunity_type }}</p>
                 </div>
             </div>
         </div>
@@ -24,14 +24,17 @@
 export default {
     name: 'ActivityCard',
     props: {
+        opportunity_type: String,
         name: String,
-        activity_name: String,
-        total: Number,
-        credits_count: Number,
+        activity_type: String,
         location: String,
-        certified: Boolean,
-        logo: String,
+        months_duration: Number,
+        credits_count: Number,
         mitra_name: String,
+        mitra_brand_name: String,
+        logo: String,
+        participants_count: Number,
+        certified: Boolean,
         start_duration: String,
         end_duration: String,
     },
