@@ -68,7 +68,12 @@
             </div>
         </form>
         <div class="flex justify-center w-full">
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-5 m-2 md:m-0">
+            <div v-if="activities.length === 0 && !isLoading" class="flex mt-32">
+                <p class="text-only-white text-xl text-center">
+                    Kegiatan magang tidak ditemukan.
+                </p>
+            </div>
+            <div v-else class="grid grid-cols-2 md:grid-cols-3 gap-5 m-2 md:m-0">
                 <ActivityCard v-for="(activity, index) in activities" :key="index" :name="activity.name"
                     :activity_type="activity.activity_type" :location="activity.location"
                     :months_duration="activity.months_duration" :credits_count="activity.credits_count"
@@ -77,6 +82,9 @@
                     :certified="activity.certified" :start_duration="activity.start_duration"
                     :end_duration="activity.end_duration" :opportunity_type="activity.opportunity_type" />
             </div>
+        </div>
+        <div v-if="isLoading" class="flex justify-center w-full mt-32">
+            <span class="loader"></span>
         </div>
     </div>
 </template>
@@ -117,7 +125,18 @@ export default {
     },
     methods: {
         fetchActivities() {
-            fetch(`${import.meta.env.VITE_APP_OPPORTUNITY_URL}opportunity_type=${this.opportunity_type}&keyword=${this.posisi}&location_key=${this.lokasi}&activity_type=&mitra_key=${this.mitra}&offset=${this.offset}&limit=${this.limit}`)
+            const url = import.meta.env.VITE_APP_OPPORTUNITY_URL;
+            const body = {
+                params: `opportunity_type=${this.opportunity_type}&keyword=${this.posisi}&location_key=${this.lokasi}&activity_type=&mitra_key=${this.mitra}&offset=${this.offset}&limit=${this.limit}`
+            };
+            this.isLoading = true;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
                 .then(response => response.json())
                 .then(data => {
                     this.activities = [...this.activities, ...data.data.map((activity: any) => {
@@ -140,6 +159,9 @@ export default {
                     this.offset += this.limit;
                 })
                 .catch(error => console.error('Error fetching activities:', error))
+                .finally(() => {
+                    this.isLoading = false;
+                });
         },
         fetchNextActivity() {
             if (this.isLoading) return;
@@ -165,6 +187,11 @@ export default {
             }
         }
     },
+    watch: {
+        opportunity_type() {
+            this.fetchFilteredActivities();
+        }
+    },
     beforeMount() {
         this.fetchActivities();
     },
@@ -176,3 +203,42 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.loader {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+}
+
+.loader::after,
+.loader::before {
+    content: '';
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid #FFF;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: animloader 2s linear infinite;
+}
+
+.loader::after {
+    animation-delay: 1s;
+}
+
+@keyframes animloader {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+</style>
