@@ -6,7 +6,8 @@
                 MSIB Viewer | Magang
             </h1>
         </div>
-        <form class="flex flex-col justify-center items-center mb-6 mx-5 md:mx-0" @submit.prevent="fetchFilteredActivities">
+        <form class="flex flex-col justify-center items-center mb-6 mx-5 md:mx-0"
+            @submit.prevent="fetchFilteredActivities">
             <div class="grid gap-x-8 md:w-1/2">
                 <div class="flex flex-row gap-8">
                     <div class="flex flex-wrap -mx-3">
@@ -25,7 +26,6 @@
                                 class="appearance-none block w-full bg-only-dark-gray text-only-white rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-only-white focus:text-only-dark-gray"
                                 id="mitra-filter" type="text" placeholder="Semua Perusahaan" v-model="mitra">
                         </div>
-
                     </div>
                     <div>
                         <button
@@ -35,7 +35,6 @@
                         </button>
                     </div>
                 </div>
-
                 <div
                     class="animate__animated animate__fadeInUp animate__delay-1s flex flex-col md:flex-row md:items-center gap-x-8 gap-y-2 my-2">
                     <p class="text-only-white font-bold">Tipe Lowongan: </p>
@@ -44,7 +43,7 @@
                             <input type="radio" value="" class="peer hidden" name="opportunity_type" checked
                                 v-model="opportunity_type">
                             <div
-                                class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
+                                class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2 peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
                                 <p class="text-only-white text-center">Semua</p>
                             </div>
                         </label>
@@ -52,7 +51,7 @@
                             <input type="radio" value="MSIB" class="peer hidden" name="opportunity_type"
                                 v-model="opportunity_type">
                             <div
-                                class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
+                                class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2 peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
                                 <p class="text-only-white text-center">MSIB</p>
                             </div>
                         </label>
@@ -60,7 +59,7 @@
                             <input type="radio" value="MANDIRI" class="peer hidden" name="opportunity_type"
                                 v-model="opportunity_type">
                             <div
-                                class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2  peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
+                                class="bg-only-dark-gray rounded-full p-2 hover:bg-only-purple peer-checked:bg-only-purple peer-checked:border-2 peer-checked:border-only-white cursor-pointer peer-checked:font-bold">
                                 <p class="text-only-white text-center">Mandiri</p>
                             </div>
                         </label>
@@ -69,21 +68,30 @@
             </div>
         </form>
         <div class="flex justify-center w-full">
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-5 m-2 md:m-0">
+            <div v-if="activities.length === 0 && !isLoading" class="flex mt-32">
+                <p class="text-only-white text-xl text-center">
+                    Kegiatan magang tidak ditemukan.
+                </p>
+            </div>
+            <div v-else class="grid grid-cols-2 md:grid-cols-3 gap-5 m-2 md:m-0">
                 <ActivityCard v-for="(activity, index) in activities" :key="index" :name="activity.name"
                     :activity_type="activity.activity_type" :location="activity.location"
                     :months_duration="activity.months_duration" :credits_count="activity.credits_count"
-                    :mitra_name="activity.mitra_name" :mitra_brand_name="activity.mitra_brand_name" :logo="activity.logo"
-                    :participants_count="activity.participants_count" :certified="activity.certified"
-                    :start_duration="activity.start_duration" :end_duration="activity.end_duration"
-                    :opportunity_type="activity.opportunity_type" />
+                    :mitra_name="activity.mitra_name" :mitra_brand_name="activity.mitra_brand_name"
+                    :logo="activity.logo" :participants_count="activity.participants_count"
+                    :certified="activity.certified" :start_duration="activity.start_duration"
+                    :end_duration="activity.end_duration" :opportunity_type="activity.opportunity_type" />
             </div>
+        </div>
+        <div v-if="isLoading" class="flex justify-center w-full mt-32">
+            <span class="loader"></span>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import ActivityCard from '@/components/ActivityCard.vue'
+
 export default {
     name: 'MagangPage',
     components: {
@@ -106,18 +114,29 @@ export default {
                 start_duration: string,
                 end_duration: string,
             }[],
-            offset: 0, // Keep track of your current offset
-            limit: 20, // Set your limit per fetch
+            offset: 0,
+            limit: 20,
             posisi: "",
             lokasi: "",
             mitra: "",
             opportunity_type: "",
-            isLoading: false, // To prevent multiple simultaneous requests
+            isLoading: false,
         }
     },
     methods: {
         fetchActivities() {
-            fetch(`${import.meta.env.VITE_APP_OPPORTUNITY_URL}opportunity_type=${this.opportunity_type}&keyword=${this.posisi}&location_key=${this.lokasi}&activity_type=&mitra_key=${this.mitra}&offset=${this.offset}&limit=${this.limit}`)
+            const url = import.meta.env.VITE_APP_OPPORTUNITY_URL;
+            const body = {
+                params: `opportunity_type=${this.opportunity_type}&keyword=${this.posisi}&location_key=${this.lokasi}&activity_type=&mitra_key=${this.mitra}&offset=${this.offset}&limit=${this.limit}`
+            };
+            this.isLoading = true;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
                 .then(response => response.json())
                 .then(data => {
                     this.activities = [...this.activities, ...data.data.map((activity: any) => {
@@ -137,15 +156,16 @@ export default {
                             end_duration: activity.end_duration,
                         }
                     })];
-                    this.offset += this.limit; // Update the offset
+                    this.offset += this.limit;
                 })
                 .catch(error => console.error('Error fetching activities:', error))
+                .finally(() => {
+                    this.isLoading = false;
+                });
         },
         fetchNextActivity() {
-
-            if (this.isLoading) return; // Prevent multiple requests
+            if (this.isLoading) return;
             this.isLoading = true;
-
             try {
                 this.fetchActivities();
             } catch (error) {
@@ -161,15 +181,19 @@ export default {
         },
         handleScroll() {
             let scrollTotal = document.documentElement.scrollTop + window.innerHeight;
-            let heightThreshold = document.documentElement.offsetHeight - 5; // Adjust this value as needed
-
+            let heightThreshold = document.documentElement.offsetHeight - 5;
             if (scrollTotal > heightThreshold && !this.isLoading) {
                 this.fetchNextActivity();
             }
         }
     },
+    watch: {
+        opportunity_type() {
+            this.fetchFilteredActivities();
+        }
+    },
     beforeMount() {
-        this.fetchActivities(); // Initial fetch
+        this.fetchActivities();
     },
     mounted() {
         window.addEventListener("scroll", this.handleScroll)
@@ -178,5 +202,43 @@ export default {
         window.removeEventListener("scroll", this.handleScroll)
     }
 }
-
 </script>
+
+<style scoped>
+.loader {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+}
+
+.loader::after,
+.loader::before {
+    content: '';
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid #FFF;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: animloader 2s linear infinite;
+}
+
+.loader::after {
+    animation-delay: 1s;
+}
+
+@keyframes animloader {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+</style>
